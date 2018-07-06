@@ -1,16 +1,43 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DropdownComponent } from './dropdown/dropdown.component';
+import { MidComponent } from './mid/mid.component';
+import { FormComponent } from './form/form.component';
+import { FormDetailsComponent } from './form-details/form-details.component';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { HttpClientModule } from '@angular/common/http';
+// import { LoginComponent } from './login/login.component';
+const appRoutes: Routes = [
+  {path: 'feedback-form', component: FormComponent,
+  children: [
+    { path: 'form-details', component: FormDetailsComponent }
+  ]
+  },
+  { path: 'check-status', component: MidComponent}, // change name here
+  { path: '', redirectTo: '/feedback-form', pathMatch: 'full'}
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DropdownComponent,
+    MidComponent,
+    FormComponent,
+    FormDetailsComponent,
+    // LoginComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    NgbModule.forRoot(),
+    RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
