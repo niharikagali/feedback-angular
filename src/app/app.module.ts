@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,11 @@ import { FormDetailsComponent } from './form-details/form-details.component';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { ConfigService } from './config.service';
+import {AuthGuardService as AuthGuard} from './auth-guard.service';
+import { AlertService} from './_services';
+
 // import { LoginComponent } from './login/login.component';
 const appRoutes: Routes = [
   {path: 'feedback-form', component: FormComponent,
@@ -18,8 +23,10 @@ const appRoutes: Routes = [
     { path: 'form-details', component: FormDetailsComponent }
   ]
   },
-  { path: 'check-status', component: MidComponent}, // change name here
-  { path: '', redirectTo: '/feedback-form', pathMatch: 'full'}
+  { path: 'check-status', component: MidComponent, canActivate: [AuthGuard] }, // change name here
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/feedback-form', pathMatch: 'full'},
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
@@ -29,7 +36,7 @@ const appRoutes: Routes = [
     MidComponent,
     FormComponent,
     FormDetailsComponent,
-    // LoginComponent,
+     LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +44,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard, ConfigService, AlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

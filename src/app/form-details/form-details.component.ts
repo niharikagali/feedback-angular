@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { ConfigService } from '../config.service';
 import { User } from './user';
 
 @Component({
@@ -10,7 +10,7 @@ import { User } from './user';
 export class FormDetailsComponent implements OnInit {
 
   users: User[];
-  constructor(private Auth: AuthService) { }
+  constructor(private Config: ConfigService) { }
 
   ngOnInit() {
   }
@@ -24,7 +24,7 @@ export class FormDetailsComponent implements OnInit {
     const lname = target.querySelector('#lastname').value;
     const email = target.querySelector('#email').value;
 
-    this.Auth.getUserDetails({ sub }, { descr }, { fname }, { lname }, { email } as User);
+    this.Config.getUserDetails({ sub }, { descr }, { fname }, { lname }, { email } as User);
     // console.log(fname, lname);
   }
 }
