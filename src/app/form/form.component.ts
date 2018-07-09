@@ -10,6 +10,7 @@ export class FormComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    this.showForm();
   }
 
   showForm() {

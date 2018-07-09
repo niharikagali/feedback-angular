@@ -1,29 +1,68 @@
-
 <div class="container">
-  <form (submit)="sendUser($event)" >
-    <div class="form-group">
-      <label for="exampleName">Subject</label>
-      <input type="text" class="form-control" id="subject" placeholder="Name">
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Description</label>
-      <textarea class="form-control" id="descr" rows="3"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="exampleName">First Name</label>
-      <input type="text" class="form-control" id="firstname" placeholder="Name">
-    </div>
-    <div class="form-group">
-      <label for="exampleName">Last Name</label>
-      <input type="text" class="form-control" id="lastname" placeholder="Name">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <form [formGroup]="registerForm" (ngSubmit)="sendUser($event)">
+          <div class="form-group">
+            <label>Type of Feedback</label>
+            <div class="form-control">
+              <label class="radio-inline" id="type">
+                <input type="radio" name="type" value="comments" (click)="handleChange('comments')"> Comments
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="type" value="bugrep" (click)="handleChange('bugrep')"> Bug Report
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="type" value="questions" (click)="handleChange('questions')"> Questions
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" formControlName="subject" class="form-control" id="subject" [ngClass]="{ 'is-invalid': submitted && f.subject.errors }"
+            />
+            <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
+              <div *ngIf="f.subject.errors.required">Subject is required</div>
+            </div>
+          </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
-<!-- <app-textbox></app-textbox> -->
+          <div class="form-group">
+            <label>Description</label>
+            <textarea formControlName="descr" class="form-control" id="descr" [ngClass]="{ 'is-invalid': submitted && f.descr.errors }"></textarea>
+            <div *ngIf="submitted && f.descr.errors" class="invalid-feedback">
+              <div *ngIf="f.descr.errors.required">Description is required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" formControlName="firstname" class="form-control" id="firstname" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }"
+            />
+            <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+              <div *ngIf="f.firstname.errors.required">First Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" formControlName="lastname" class="form-control" id="lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }"
+            />
+            <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+              <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" formControlName="email" class="form-control" id="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+            />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
