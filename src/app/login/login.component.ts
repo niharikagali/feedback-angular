@@ -2,45 +2,43 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
-import { AlertService } from '../_services';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  loading = false;
+  registerForm: FormGroup;
   submitted = false;
-  returnUrl: string;
 
-  constructor(
-    // private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private alertService: AlertService) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    // this.loginForm = this.formBuilder.group({
-    //   username: ['', Validators.required],
-    //   password: ['', Validators.required]
-    // });
-
-    // reset login status
-
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() { return this.registerForm.controls; }
 
-  onSubmit() {
+  onSubmit(event) {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.loginForm.invalid) {
+    if (this.registerForm.invalid) {
       return;
     }
 
-    this.loading = true;
-}
+    event.preventDefault();
+    const target = event.target;
+    const email = target.querySelector('#email').value;
+    const password = target.querySelector('#password').value;
+    if (email === 'niharika@gmail.com' && password === 'niharika') {
+      alert('SUCCESS!! :-)');
+    }
+    alert('Please enter valid credentials');
+  }
+
 }
