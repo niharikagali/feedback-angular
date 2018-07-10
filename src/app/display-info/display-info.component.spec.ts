@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MidComponent } from './mid.component';
+import { DisplayInfoComponent } from './display-info.component';
 
-describe('MidComponent', () => {
-  let component: MidComponent;
-  let fixture: ComponentFixture<MidComponent>;
+describe('DisplayInfoComponent', () => {
+  let component: DisplayInfoComponent;
+  let fixture: ComponentFixture<DisplayInfoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MidComponent ]
+      declarations: [ DisplayInfoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MidComponent);
+    fixture = TestBed.createComponent(DisplayInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -20,6 +20,8 @@ const httpOptions = {
 })
 export class ConfigService {
 
+   public  x :string;
+
   GetHttpHeaders(): HttpHeaders {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     return headers;
@@ -38,6 +40,9 @@ export class ConfigService {
 
       return this.http.post<any>(this.configUrl, { sub, descr, firstname, lastname, email, feedbacktype},
         { headers: this.GetHttpHeaders() }).subscribe(data => {
+         // this.x= data.ref_id;
+         this.x="3uyd8";
+
       });
     }
   }

@@ -4,6 +4,10 @@ import { User } from './user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import {NgbModal, ModalDismissReasons, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {ApiServicesService } from '../api-services.service';
+import {HttpClient} from '@angular/common/http';
+import { RouteConfigLoadEnd } from '@angular/router';
 
 let type = 10;
 
@@ -18,10 +22,17 @@ export class FormDetailsComponent implements OnInit {
 
   registerForm: FormGroup;
   submitted = false;
+   public ref_id:string;
 
-  constructor(private Config: ConfigService, private formBuilder: FormBuilder) { }
+  constructor(private Config: ConfigService, private formBuilder: FormBuilder,private modalService: NgbModal, private http :HttpClient,private refid : ApiServicesService) {}
+  closeResult: string;
+
 
   ngOnInit() {
+       this.ref_id = this.Config.x;
+       console.log(this.Config.x);
+       console.log(this.ref_id);
+   ///    this.ref_id="rrr";
     this.registerForm = this.formBuilder.group({
       subject: ['', Validators.required],
       descr: ['', Validators.required],
@@ -33,6 +44,35 @@ export class FormDetailsComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
+
+  functionRefId()
+  {
+        /*
+  this.refid.getRef().subscribe(data => 
+    {this.refId = data;
+     console.log(this.refId);
+    });*/
+  }
+
+
+
+  openWindow(content) {
+   
+    this.modalService.open(content, { windowClass: 'dark-modal' , centered: true});
+  
+  }
+
+  
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -40,8 +80,6 @@ export class FormDetailsComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-
-    alert('SUCCESS!! :-)');
   }
   // tslint:disable-next-line:member-ordering
   handleChange(val) {
