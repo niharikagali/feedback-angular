@@ -22,9 +22,10 @@ export class FormDetailsComponent implements OnInit {
 
   registerForm: FormGroup;
   submitted = false;
-   public ref_id:string;
+   public ref_id: string;
 
-  constructor(private Config: ConfigService, private formBuilder: FormBuilder,private modalService: NgbModal, private http :HttpClient,private refid : ApiServicesService) {}
+  // tslint:disable-next-line:max-line-length
+  constructor(private Config: ConfigService, private formBuilder: FormBuilder, private modalService: NgbModal, private http: HttpClient, private refid: ApiServicesService) {}
   closeResult: string;
 
 
@@ -34,35 +35,22 @@ export class FormDetailsComponent implements OnInit {
        console.log(this.ref_id);
    ///    this.ref_id="rrr";
     this.registerForm = this.formBuilder.group({
-      subject: ['', Validators.required],
-      descr: ['', Validators.required],
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
+      subject: ['', [Validators.required, Validators.maxLength(50)]],
+      descr: ['', [Validators.required, Validators.maxLength(100)]],
+      firstname: ['', [Validators.required, Validators.maxLength(50)]],
+      lastname: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
     });
   }
 
   get f() { return this.registerForm.controls; }
 
-
-  functionRefId()
-  {
-        /*
-  this.refid.getRef().subscribe(data => 
-    {this.refId = data;
-     console.log(this.refId);
-    });*/
-  }
-
-
-
   openWindow(content) {
-   
+
     this.modalService.open(content, { windowClass: 'dark-modal' , centered: true});
-  
+
   }
 
-  
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -80,6 +68,10 @@ export class FormDetailsComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+  }
+
+  resetForm() {
+    this.registerForm.reset();
   }
   // tslint:disable-next-line:member-ordering
   handleChange(val) {

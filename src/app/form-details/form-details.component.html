@@ -5,13 +5,13 @@
           <div class="form-group">
             <label>Type of Feedback</label>
             <div class="form-control">
-              <label class="radio-inline" id="type">
+              <label class="radio-inline rd-space" id="type">
                 <input type="radio" name="type" value="comments" (click)="handleChange('comments')"> Comments
               </label>
-              <label class="radio-inline">
+              <label class="radio-inline rd-space">
                 <input type="radio" name="type" value="bugrep" (click)="handleChange('bugrep')"> Bug Report
               </label>
-              <label class="radio-inline">
+              <label class="radio-inline rd-space">
                 <input type="radio" name="type" value="questions" (click)="handleChange('questions')"> Questions
               </label>
             </div>
@@ -22,6 +22,7 @@
             />
             <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
               <div *ngIf="f.subject.errors.required">Subject is required</div>
+              <div *ngIf="f.subject.errors.maxlength">Subject can't be longer than 50 characters</div>
             </div>
           </div>
 
@@ -30,6 +31,7 @@
             <textarea formControlName="descr" class="form-control" id="descr" [ngClass]="{ 'is-invalid': submitted && f.descr.errors }"></textarea>
             <div *ngIf="submitted && f.descr.errors" class="invalid-feedback">
               <div *ngIf="f.descr.errors.required">Description is required</div>
+              <div *ngIf="f.descr.errors.maxlength">Description can't be longer than 100 characters</div>
             </div>
           </div>
 
@@ -39,6 +41,7 @@
             />
             <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
               <div *ngIf="f.firstname.errors.required">First Name is required</div>
+              <div *ngIf="f.firstname.errors.maxlength">First Name can't be longer than 50 characters</div>
             </div>
           </div>
           <div class="form-group">
@@ -47,6 +50,7 @@
             />
             <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
               <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+              <div *ngIf="f.lastname.errors.maxlength">Last Name can't be longer than 50 characters</div>
             </div>
           </div>
           <div class="form-group">
@@ -60,7 +64,8 @@
             </div>
           </div>
           <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary" (click)="openWindow(content);functionRefId();">Submit</button>
+            <button [disabled]="loading" class="btn btn-primary btn-space" (click)="openWindow(content);functionRefId();">Submit</button>
+            <button [disabled]="loading" class="btn btn-primary btn-space" (click)="resetForm()">Reset</button>
           </div>
         </form>
       </div>
